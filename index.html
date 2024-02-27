@@ -15,42 +15,40 @@
             Javascript <span class="ninja">Ninja Quiz</span> Center
           </h1>
         </div>
-        <header>
+    <header>
         <div class="scores">
-        
         <h3>
           Highscores
         </h3>
         <ol>
-          <li id="dojo1">Placeholder1</li>
-          <li id="dojo2">Placeholder2</li>
-          <li id="dojo3">Placeholder3</li>
+          <li class="highScores">Placeholder1</li>
+          <li class="highScores">Placeholder2</li>
+          <li class="highScores">Placeholder3</li>
         </ul>
       </div>
       <div class="headerImage">
-        <img src="./assets/images/transparent_2024-02-27T14-44-24.png" />
+        <img src="./assets/images/ninja_coder.png" />
       </div>
       
       <div class="scores">
-        <h2>
-          Time: <span class="time">0</span>
-        </h2>
+        <h3>
+          Time: <span id="time" class="time">__</span>
+        </h3>
       </div>
     </header>
 
-    <div class="wrapper" hidden="true">
+    <div id="start" class="wrapper">
       <div>
         <h1>Student <span class="ninjaBlock">Ninja</span> Challenge</h1>
       </div>
       <div>
         <p>
-          Answer the following code-related questions <span class="ninjaBlock">within the time limit</span> to enter the dojo. Keep in mind that incorrect answers will chop your score/time by 15 seconds!
+          Answer the following code-related questions <span class="ninjaBlock">within the time limit</span> to enter the dojo. Keep in mind that incorrect answers will chop your score!
         </p>
       </div>
       <div>
-        <button id="start">Start Quiz</button>
+        <button id="startButton">Start Quiz</button>
       </div>
-        
     </div>
 
     <div id="questions" class="wrapper" hidden="true">
@@ -62,7 +60,7 @@
       </div>
     </div>
 
-      <div id="end-screen" class="wrapper" hidden="true">
+      <div id="end" class="wrapper" hidden="true">
         <h2>All done!</h2>
         <p>Your final score is <span id="final-score"></span>.</p>
         <p>

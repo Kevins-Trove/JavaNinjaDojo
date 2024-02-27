@@ -9,7 +9,17 @@
 /* header  */
 header {
   display: flex;
-  justify-content: right;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 80%;
+  position: relative;
+  left: 10%;
+}
+
+h1, h2,h3 {
+  background-color: black;
 }
 
 .title {
@@ -19,11 +29,13 @@ header {
 }
 
 .scores {
-  flex: 1 1 auto;
+  padding: 20px;
+  justify-content: center; /* center the content horizontally */
+  align-items: center; /* center the content vertically */
 }
 
 .headerImage {
-  flex: 1 1 auto;
+  width: 300px;
 }
 
 .headerImage img {
@@ -32,8 +44,10 @@ header {
 }
 
 .time {
-  flex: 1 1 auto;
+  
   justify-content: center;
+  font-size: 250%;
+  color: red;
 }
 
 .ninja {
@@ -78,5 +92,21 @@ header {
   width: 150px;
   height: 30px;
   background-color: #369739;
-  
+  justify-content: center; /* center the content horizontally */
+  align-items: center; /* center the content vertically */
+    --padding-x: 1.2em;
+  border-color: transparent; 
 }
+
+#start {
+  display: flex;
+}
+
+#questions {
+  display: none;
+}
+
+#end {
+  display: none;
+}
+
