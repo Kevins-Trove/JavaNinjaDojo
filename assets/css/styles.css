@@ -3,6 +3,28 @@ body {
   font-size: 120%;
 }
 
+header {
+  display: flex;
+  flex-direction: row;
+  flex-flow: row;
+  flex-wrap: wrap;
+  width: 100%;
+  background-color: black;
+  color: lightblue;
+}
+
+div.scores {
+  display: flex;
+  
+  
+  width: 25%;
+}
+
+div.time {
+  display: flex;
+  width: 25%;
+}
+
 a {
   color: #563d7c;
   text-decoration: none;
