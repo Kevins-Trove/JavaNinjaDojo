@@ -10,19 +10,16 @@
 header {
   display: flex;
   justify-content: right;
-  padding: 20px;
 }
 
 .title {
   display: flex;
   justify-content: center;
-  margin: 20px;
   width: 100%;
 }
 
 .scores {
   flex: 1 1 auto;
-  margin: 20px;
 }
 
 .headerImage {
@@ -40,6 +37,46 @@ header {
 }
 
 .ninja {
+  font-family: cursive;
   color: red;
   font-size: 150%;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 80%;
+  position: relative;
+  left: 10%;
+  background-color: #343030;
+  border-radius: 20px 20px 20px 20px;
+  padding: 20px;
+}
+
+.wrapper div {
+  background-color: #343030;
+}
+
+.wrapper h1,h2 {
+  background-color: #343030;
+}
+
+.wrapper p {
+  background-color: #343030;
+}
+
+.ninjaBlock {
+  font-family: cursive;
+  color: red;
+  font-size: 150%;
+  background-color: #343030;
+}
+
+.wrapper button {
+  width: 150px;
+  height: 30px;
+  background-color: #369739;
+  
 }

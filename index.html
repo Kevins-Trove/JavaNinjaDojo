@@ -38,21 +38,31 @@
       </div>
     </header>
 
-    <div class="wrapper">
-      <div id="start-screen" class="start">
-        <h1>Entry Challenge</h1>
+    <div class="wrapper" hidden="true">
+      <div>
+        <h1>Student <span class="ninjaBlock">Ninja</span> Challenge</h1>
+      </div>
+      <div>
         <p>
-          Answer the following code-related questions within the time limit to enter the dojo. Keep in mind that incorrect answers will chop your score/time by 15 seconds!
+          Answer the following code-related questions <span class="ninjaBlock">within the time limit</span> to enter the dojo. Keep in mind that incorrect answers will chop your score/time by 15 seconds!
         </p>
+      </div>
+      <div>
         <button id="start">Start Quiz</button>
       </div>
+        
+    </div>
 
-      <div id="questions" class="hide">
-        <h2 id="question-title"></h2>
-        <div id="choices" class="choices"></div>
+    <div id="questions" class="wrapper" hidden="true">
+      <div>
+        <h2 id="question-title">question-title</h2>
       </div>
+      <div id="choices" class="choices">
+        Choices
+      </div>
+    </div>
 
-      <div id="end-screen" class="hide">
+      <div id="end-screen" class="wrapper" hidden="true">
         <h2>All done!</h2>
         <p>Your final score is <span id="final-score"></span>.</p>
         <p>
@@ -61,8 +71,8 @@
         </p>
       </div>
 
-      <div id="feedback" class="feedback hide"></div>
-    </div>
+    
+    
 
     <script src="./assets/scripts/questions.js"></script>
     <script src="./assets/scripts/logic.js"></script>
