@@ -1,17 +1,117 @@
 // variables to keep track of quiz state
-var currentQuestionIndex = 0;
+var questionIndex = 0;
 var time = questions.length * 15;
-var timerId;
+var timeId;
+
+var score1 = {
+  name: "",
+  score: 0
+}
+
+var score2 = {
+  name: "",
+  score: 0
+}
+
+var score3 = {
+  name: "",
+  score: 0
+}
+
+var x = new Array();
+
+score1.name = "KR";
+score1.score = 50;
+x.push(score1);
+score2.name = "FE";
+score2.score = 76;
+x.push(score2);
+score3.name = "we";
+score3.score = 3;
+x.push(score3);
+localStorage.setItem("dojoScores", JSON.stringify(x));
 
 // variables to reference DOM elements
-var questionsEl = document.getElementById('questions');
-var timerEl = document.getElementById('time');
-var choicesEl = document.getElementById('choices');
-var submitBtn = document.getElementById('submit');
-var startBtn = document.getElementById('start');
-var initialsEl = document.getElementById('initials');
-var feedbackEl = document.getElementById('feedback');
+var startEl = document.querySelector('#start');
+var questionsEl = document.querySelector('#questions');
+var endEl = document.querySelector('#end');
+var startBtn = document.querySelector('#startButton');
+var highScores = document.querySelectorAll('.highScores');
 
+var timeEl = document.querySelector('#time');
+
+
+// Setup Event listeners
+window.addEventListener('load', () => {
+  startEl.style.display ="flex";
+  questionsEl.style.display ="none";
+  endEl.style.display ="none";
+  
+  updateScores();
+});
+
+
+startBtn.addEventListener('click', () => {
+  startEl.style.display ="none";
+  questionsEl.style.display ="flex";
+  endEl.style.display ="none";
+});
+
+// Functions
+function updateScores() {
+  // update previous high scores, only post the top three
+  var savedScores = localStorage.getItem("dojoScores");
+  
+  if (savedScores) {
+    var decoded = JSON.parse(savedScores);
+console.log(decoded);
+    decoded.sort( (a,b) => {
+      if (a.score > b.score) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+    console.log(decoded);
+    for (var i =0; i < 3; i++ ){
+      if (i< decoded.length){
+        if (decoded[i])
+    
+          highScores[i].textContent = decoded[i].name + " " + decoded[i].score + " - " + ninjaLevel(decoded[i].score);
+      } else {
+        highScores[i].textContent = "No score";
+      }
+    }
+   
+
+  }
+}
+
+// returns ninga name levels by value
+function ninjaLevel(value) {
+  // update previous high scores, only post the top three
+  switch(true) {
+    case value  >= 75:
+      return "MASTER OF UNIVERSE"
+      break;
+    case value >= 50:
+      return "Ninja coder"
+      break;
+    case value >= 20:
+      return "Novice"
+      break;
+    case value >= 10 :
+        return "No chance of being a ninja"
+        break;
+    default:
+      return "Try needle point"
+  }
+
+}
+
+
+
+/*
 // sound effects
 var sfxRight = new Audio('assets/sfx/correct.wav');
 var sfxWrong = new Audio('assets/sfx/incorrect.wav');
@@ -32,6 +132,7 @@ function startQuiz() {
 
   getQuestion();
 }
+
 
 function getQuestion() {
   // get current question object from array
@@ -176,3 +277,4 @@ startBtn.onclick = startQuiz;
 choicesEl.onclick = questionClick;
 
 initialsEl.onkeyup = checkForEnter;
+*/

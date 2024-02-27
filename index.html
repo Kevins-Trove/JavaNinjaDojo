@@ -4,33 +4,63 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Coding Quiz</title>
+    <title>Java Script Dojo</title>
 
     <link rel="stylesheet" href="./assets/css/styles.css" />
   </head>
 
   <body>
-    <div class="scores"><a href="highscores.html">View Highscores</a></div>
+        <div class="title">
+          <h1>
+            Javascript <span class="ninja">Ninja Quiz</span> Center
+          </h1>
+        </div>
+    <header>
+        <div class="scores">
+        <h3>
+          Highscores
+        </h3>
+        <ol>
+          <li class="highScores">Placeholder1</li>
+          <li class="highScores">Placeholder2</li>
+          <li class="highScores">Placeholder3</li>
+        </ul>
+      </div>
+      <div class="headerImage">
+        <img src="./assets/images/ninja_coder.png" />
+      </div>
+      
+      <div class="scores">
+        <h3>
+          Time: <span id="time" class="time">__</span>
+        </h3>
+      </div>
+    </header>
 
-    <div class="timer">Time: <span id="time">0</span></div>
-
-    <div class="wrapper">
-      <div id="start-screen" class="start">
-        <h1>Coding Quiz Challenge</h1>
+    <div id="start" class="wrapper">
+      <div>
+        <h1>Student <span class="ninjaBlock">Ninja</span> Challenge</h1>
+      </div>
+      <div>
         <p>
-          Try to answer the following code-related questions within the time
-          limit. Keep in mind that incorrect answers will penalize your
-          score/time by 15 seconds!
+          Answer the following code-related questions <span class="ninjaBlock">within the time limit</span> to enter the dojo. Keep in mind that incorrect answers will chop your score!
         </p>
-        <button id="start">Start Quiz</button>
       </div>
-
-      <div id="questions" class="hide">
-        <h2 id="question-title"></h2>
-        <div id="choices" class="choices"></div>
+      <div>
+        <button id="startButton">Start Quiz</button>
       </div>
+    </div>
 
-      <div id="end-screen" class="hide">
+    <div id="questions" class="wrapper" hidden="true">
+      <div>
+        <h2 id="question-title">question-title</h2>
+      </div>
+      <div id="choices" class="choices">
+        Choices
+      </div>
+    </div>
+
+      <div id="end" class="wrapper" hidden="true">
         <h2>All done!</h2>
         <p>Your final score is <span id="final-score"></span>.</p>
         <p>
@@ -39,8 +69,8 @@
         </p>
       </div>
 
-      <div id="feedback" class="feedback hide"></div>
-    </div>
+    
+    
 
     <script src="./assets/scripts/questions.js"></script>
     <script src="./assets/scripts/logic.js"></script>
