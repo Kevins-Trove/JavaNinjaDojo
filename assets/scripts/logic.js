@@ -1,12 +1,19 @@
+//------------------------------------------------------------------
 // variables to keep track of quiz state
+//------------------------------------------------------------------
 var questionIndex = 0;
-var timeLimit = 1;
+var timeLimit = 15;
 var timeLeft;
 var timerId;
 var userScore = 0;
+var itemObj = {
+  name: "",
+  score: 0
+};  
 
-
+//------------------------------------------------------------------
 // variables to reference DOM elements
+//------------------------------------------------------------------
 var startEl = document.querySelector('#start');
 var questionsEl = document.querySelector('#questions');
 var endEl = document.querySelector('#end');
@@ -14,11 +21,12 @@ var startBtn = document.querySelector('#startButton');
 var highScores = document.querySelectorAll('.highScores');
 var initials = document.querySelector('#initials');
 var submit = document.querySelector('#submit');
-
 var timeEl = document.querySelector('#time');
 
-
+//------------------------------------------------------------------
 // Setup Event listeners
+//------------------------------------------------------------------
+// Set initial display when form loads
 window.addEventListener('load', () => {
   // Change visibility of sections
   startEl.style.display ="flex";
@@ -28,6 +36,7 @@ window.addEventListener('load', () => {
   updateScores();
 });
 
+// start button event, starts timer
 startBtn.addEventListener('click', () => {
   // Change visibility of sections
   startEl.style.display ="none";
@@ -37,8 +46,10 @@ startBtn.addEventListener('click', () => {
   timeLeft = timeLimit;
   timeEl.innerHTML = timeLeft;
   timerId = setInterval(clock, 1000);
+  newQuestion();
 });
 
+// Initials submit button
 submit.addEventListener('click', (event) => {
   event.stopPropagation();
 
@@ -59,11 +70,24 @@ submit.addEventListener('click', (event) => {
   questionsEl.style.display ="none";
   endEl.style.display ="none";
 
-  
 });
 
 
+//------------------------------------------------------------------
 // Functions
+//------------------------------------------------------------------
+function newQuestion(){
+  var title = document.querySelector('#question-title');
+  var choices = document.querySelector('#choices');
+  
+  title.textContent = questions[0].title;
+  console.log(choices);
+  choices.removeChild(choices);
+  
+  
+  
+}
+
 function gameOver(){
   startEl.style.display ="none";
   questionsEl.style.display ="none";
@@ -74,6 +98,7 @@ function gameOver(){
   
 }
 
+// Add scrore to highscore list
 function addScore(inti, newSc) {
   
   // Get previous high scores
@@ -84,6 +109,10 @@ function addScore(inti, newSc) {
   }
 
   var decoded = JSON.parse(savedScores);
+  if(decoded == null) {
+    decoded = new Array();
+  }
+
   decoded.push(newScore);
 
   decoded.sort( (a,b) => {
@@ -94,36 +123,44 @@ function addScore(inti, newSc) {
     }
   });
 
+  // trim off extra high scores past 3
+  decoded.slice(0,2);
+
+  // Save scores to storage
   localStorage.setItem("dojoScores", JSON.stringify(decoded));
 }
 
 function updateScores() {
+  
   // update previous high scores, only post the top three
-  var savedScores = localStorage.getItem("dojoScores");
+  var decoded = JSON.parse(localStorage.getItem("dojoScores"));
   
-  
-  var decoded = JSON.parse(savedScores);
+  // Sort the array if it is not null
+  if (decoded != null){
+    decoded.sort( (a,b) => {
+      if (a.score > b.score) {
+        return -1;
+      } else {
+        return 1;
+      }
+    })
+  } 
 
-  decoded.sort( (a,b) => {
-    if (a.score > b.score) {
-      return -1;
-    } else {
-      return 1;
-    }
-  });
-
+  // add items to score list
+  var item;  
   for (var i =0; i < 3; i++ ){
-  
-    if (i< decoded.length){
-      if (decoded[i])
-  
-        highScores[i].textContent = decoded[i].name + " " + decoded[i].score + " - " + ninjaLevel(decoded[i].score);
+    
+    try {
+      var item = decoded[i];  
+    } catch (err) {
+      var item = itemObj;
+    }
+    
+    if (item.name != "") {
+      highScores[i].textContent = item.name + " " + item.score + " - " + ninjaLevel(item.score);
     } else {
       highScores[i].textContent = "No score";
     }
-  
-   
-
   }
 
 }
@@ -261,73 +298,5 @@ function questionClick(event) {
   }
 }
 
-function quizEnd() {
-  // stop timer
-  clearInterval(timerId);
 
-  // show end screen
-  var endScreenEl = document.getElementById('end-screen');
-  endScreenEl.removeAttribute('class');
 
-  // show final score
-  var finalScoreEl = document.getElementById('final-score');
-  finalScoreEl.textContent = time;
-
-  // hide questions section
-  questionsEl.setAttribute('class', 'hide');
-}
-
-function clockTick() {
-  // update time
-  time--;
-  timerEl.textContent = time;
-
-  // check if user ran out of time
-  if (time <= 0) {
-    quizEnd();
-  }
-}
-
-function saveHighscore() {
-  // get value of input box
-  var initials = initialsEl.value.trim();
-
-  // make sure value wasn't empty
-  if (initials !== '') {
-    // get saved scores from localstorage, or if not any, set to empty array
-    var highscores =
-      JSON.parse(window.localStorage.getItem('highscores')) || [];
-
-    // format new score object for current user
-    var newScore = {
-      score: time,
-      initials: initials,
-    };
-
-    // save to localstorage
-    highscores.push(newScore);
-    window.localStorage.setItem('highscores', JSON.stringify(highscores));
-
-    // redirect to next page
-    window.location.href = 'highscores.html';
-  }
-}
-
-function checkForEnter(event) {
-  // "13" represents the enter key
-  if (event.key === 'Enter') {
-    saveHighscore();
-  }
-}
-
-// user clicks button to submit initials
-submitBtn.onclick = saveHighscore;
-
-// user clicks button to start quiz
-startBtn.onclick = startQuiz;
-
-// user clicks on element containing choices
-choicesEl.onclick = questionClick;
-
-initialsEl.onkeyup = checkForEnter;
-*/

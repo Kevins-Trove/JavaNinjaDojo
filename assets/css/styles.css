@@ -98,6 +98,14 @@ h1, h2,h3 {
   border-color: transparent; 
 }
 
+.wrapper ul {
+  background-color: inherit;
+}
+
+.wrapper li {
+  background-color: inherit;
+}
+
 #start {
   display: flex;
 }
