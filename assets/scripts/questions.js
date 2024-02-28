@@ -24,7 +24,7 @@ var questions = [
   {
     title:
       'How can you detect the client browser name?.',
-    choices: ['browser.name', 'cleint.name', 'window.name', 'this.name'],
+    choices: ['browser.name', 'client.name', 'window.name', 'this.name'],
     answer: 'browser.name',
   },
   {

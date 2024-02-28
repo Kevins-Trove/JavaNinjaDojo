@@ -69,6 +69,7 @@ h1, h2,h3 {
   padding: 20px;
 }
 
+
 .wrapper div {
   background-color: #343030;
 }
@@ -88,6 +89,7 @@ h1, h2,h3 {
   background-color: #343030;
 }
 
+
 .wrapper button {
   width: 150px;
   height: 30px;
@@ -97,6 +99,24 @@ h1, h2,h3 {
     --padding-x: 1.2em;
   border-color: transparent; 
 }
+
+.wrapper ul {
+  background-color: inherit;
+  list-style-type: none; /* Remove bullets */
+}
+
+.wrapper li {
+  background-color: inherit;
+  font-size: 20px;
+  margin: 3px;
+}
+
+.wrapper li:hover {
+  background-color: #369739;
+  
+}
+
+
 
 #start {
   display: flex;

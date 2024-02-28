@@ -18,7 +18,7 @@
     <header>
         <div class="scores">
         <h3>
-          Highscores
+          Highscores (Top 3 Ninjas)
         </h3>
         <ol>
           <li class="highScores">Placeholder1</li>
@@ -34,8 +34,12 @@
         <h3>
           Time: <span id="time" class="time">__</span>
         </h3>
+        <h3>
+          Score: <span id="score" class="time">__</span>
+        </h3>
       </div>
     </header>
+
 
     <div id="start" class="wrapper">
       <div>
@@ -55,14 +59,22 @@
       <div>
         <h2 id="question-title">question-title</h2>
       </div>
-      <div id="choices" class="choices">
-        Choices
+      <div class="choiceList">
+        <ul>
+          <li class="choices">Choice1</li>
+          <li class="choices">Choice2</li>
+          <li class="choices">Choice3</li>
+         </ul> 
+      </div>
+      <div>
+        <h2 id="question-answer" hidden="true">question-answer</h2>
       </div>
     </div>
 
       <div id="end" class="wrapper" hidden="true">
-        <h2>All done!</h2>
-        <p>Your final score is <span id="final-score"></span>.</p>
+        <h2>Game Over</h2>
+        
+        <h1><span id="endMessage" class="ninjaBlock">Ninja</span></h1>
         <p>
           Enter initials: <input type="text" id="initials" max="3" />
           <button id="submit">Submit</button>
