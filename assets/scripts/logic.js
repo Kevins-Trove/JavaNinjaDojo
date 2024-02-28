@@ -23,10 +23,13 @@ var highScores = document.querySelectorAll('.highScores');
 var initials = document.querySelector('#initials');
 var submit = document.querySelector('#submit');
 var timeEl = document.querySelector('#time');
+var scoreEl = document.querySelector('#score');
+var endMsgEl = document.querySelector('#endMessage');
 
 //------------------------------------------------------------------
 // Setup Event listeners
 //------------------------------------------------------------------
+
 // Set initial display when form loads
 window.addEventListener('load', () => {
   // Change visibility of sections
@@ -47,6 +50,12 @@ startBtn.addEventListener('click', () => {
   timeLeft = timeLimit;
   timeEl.innerHTML = timeLeft;
   timerId = setInterval(clock, 1000);
+  
+  // Update score display
+  userScore = 0;
+  scoreEl.innerHTML = userScore;
+  curQuestion = 0;
+
   newQuestion();
 });
 
@@ -62,7 +71,7 @@ submit.addEventListener('click', (event) => {
     alert("Initials must be two characters.")
     return;    
   }
-  userScore = userScore +22
+  
   addScore(text, userScore);
   updateScores();
   
@@ -70,7 +79,7 @@ submit.addEventListener('click', (event) => {
   startEl.style.display ="flex";
   questionsEl.style.display ="none";
   endEl.style.display ="none";
-
+  
 });
 
 
@@ -79,39 +88,56 @@ submit.addEventListener('click', (event) => {
 //------------------------------------------------------------------
 function newQuestion(){
   //var title = document.querySelector('#question-title');
-  var list = document.querySelector(".choiceList");
+  var div = document.querySelector(".choiceList");
   var choices = document.querySelectorAll('.choices');
-  var question = questions[++curQuestion]; // increment question index  while getting reference
+  var question;
   var item;
-
+  var list;
   
+  // if at end of question end game otherwise off new question
+  ++curQuestion;
+
+  if (curQuestion >= questions.length) {
+    gameOver();
+    return;
+  } else {
+   question = questions[curQuestion];
+  }
+
   // Set question title and anwsers
   document.querySelector('#question-title').textContent = question.title;
   document.querySelector('#question-answer').textContent = question.answer;
 
-  list.parentElement.remove(list);
-  list = document.querySelector(".choiceList");
-  
-console.log();
-  //list.parentNode.removeChild(list);
-  list = document.createElement("ul");
-  list.classList.add('choices');
+  // remove choice list
+  while (div.firstChild) {
+    div.removeChild(div.lastChild);
+  }
 
-  console.log(list);
+  // Create new choice list
+  list = document.createElement("ul");
+
   for (var i = 0; i < question.choices.length; i++){
     item = document.createElement("LI");
     item.classList.add('choices');
     item.textContent =  question.choices[i];
     item.addEventListener("click", function() {
-      alert(this.name);
+      if(this.textContent == question.answer){
+        userScore = userScore + 5;
+      } else {
+        userScore = userScore - 10;
+      }
 
+      // Update score display
+      scoreEl.innerHTML = userScore;
+      newQuestion();  
     });
-    console.log(item);
+    
     list.appendChild(item);
   }
   
-  console.log(list);
-  
+  // Add new list to document
+  div.appendChild(list);
+   
   
 }
 
@@ -120,6 +146,15 @@ function gameOver(){
   questionsEl.style.display ="none";
   endEl.style.display ="flex";
 
+  // Give user score boost for time left
+  if (userScore > 0) {
+    userScore = userScore + (timeLeft * 5);
+  } 
+  
+  // Update score display
+  scoreEl.innerHTML = userScore;
+  endMsgEl.textContent =  ninjaLevel(userScore);
+  
   clearInterval(timerId);
   updateScores();
   
@@ -182,8 +217,8 @@ function updateScores() {
     } catch (err) {
       var item = itemObj;
     }
-    
-    if (item.name != "") {
+
+    if (item != null) {
       highScores[i].textContent = item.name + " " + item.score + " - " + ninjaLevel(item.score);
     } else {
       highScores[i].textContent = "No score";
@@ -196,16 +231,16 @@ function updateScores() {
 function ninjaLevel(value) {
   // update previous high scores, only post the top three
   switch(true) {
-    case value  >= 75:
-      return "MASTER OF UNIVERSE"
-      break;
-    case value >= 50:
-      return "Ninja coder"
+    case value  >= 30:
+      return "MASTER NINJA"
       break;
     case value >= 20:
+      return "Ninja coder"
+      break;
+    case value >= 10:
       return "Novice"
       break;
-    case value >= 10 :
+    case value >= 0 :
         return "No chance of being a ninja"
         break;
     default:
