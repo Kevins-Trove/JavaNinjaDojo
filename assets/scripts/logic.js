@@ -220,13 +220,13 @@ function updateScores() {
     
     try {
       var item = decoded[i];  
+      if (item != null) {
+        highScores[i].textContent = item.name + " " + item.score + " - " + ninjaLevel(item.score);
+      } else {
+        highScores[i].textContent = "No score";
+      }
+  
     } catch (err) {
-      var item = itemObj;
-    }
-
-    if (item != null) {
-      highScores[i].textContent = item.name + " " + item.score + " - " + ninjaLevel(item.score);
-    } else {
       highScores[i].textContent = "No score";
     }
   }
