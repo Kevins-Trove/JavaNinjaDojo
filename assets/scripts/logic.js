@@ -1,35 +1,10 @@
 // variables to keep track of quiz state
 var questionIndex = 0;
-var time = questions.length * 15;
-var timeId;
+var timeLimit = 1;
+var timeLeft;
+var timerId;
+var userScore = 0;
 
-var score1 = {
-  name: "",
-  score: 0
-}
-
-var score2 = {
-  name: "",
-  score: 0
-}
-
-var score3 = {
-  name: "",
-  score: 0
-}
-
-var x = new Array();
-
-score1.name = "KR";
-score1.score = 50;
-x.push(score1);
-score2.name = "FE";
-score2.score = 76;
-x.push(score2);
-score3.name = "we";
-score3.score = 3;
-x.push(score3);
-localStorage.setItem("dojoScores", JSON.stringify(x));
 
 // variables to reference DOM elements
 var startEl = document.querySelector('#start');
@@ -37,12 +12,15 @@ var questionsEl = document.querySelector('#questions');
 var endEl = document.querySelector('#end');
 var startBtn = document.querySelector('#startButton');
 var highScores = document.querySelectorAll('.highScores');
+var initials = document.querySelector('#initials');
+var submit = document.querySelector('#submit');
 
 var timeEl = document.querySelector('#time');
 
 
 // Setup Event listeners
 window.addEventListener('load', () => {
+  // Change visibility of sections
   startEl.style.display ="flex";
   questionsEl.style.display ="none";
   endEl.style.display ="none";
@@ -50,41 +28,104 @@ window.addEventListener('load', () => {
   updateScores();
 });
 
-
 startBtn.addEventListener('click', () => {
+  // Change visibility of sections
   startEl.style.display ="none";
   questionsEl.style.display ="flex";
   endEl.style.display ="none";
+
+  timeLeft = timeLimit;
+  timeEl.innerHTML = timeLeft;
+  timerId = setInterval(clock, 1000);
 });
 
+submit.addEventListener('click', (event) => {
+  event.stopPropagation();
+
+  // Force the user to input intiaials
+  var text = new String(initials.value).toUpperCase().trim();
+  text = text.replace(" ", "");
+  
+  if (text.length != 2 ){
+    alert("Initials must be two characters.")
+    return;    
+  }
+  userScore = userScore +22
+  addScore(text, userScore);
+  updateScores();
+  
+  // Change visibility of sections
+  startEl.style.display ="flex";
+  questionsEl.style.display ="none";
+  endEl.style.display ="none";
+
+  
+});
+
+
 // Functions
+function gameOver(){
+  startEl.style.display ="none";
+  questionsEl.style.display ="none";
+  endEl.style.display ="flex";
+
+  clearInterval(timerId);
+  updateScores();
+  
+}
+
+function addScore(inti, newSc) {
+  
+  // Get previous high scores
+  var savedScores = localStorage.getItem("dojoScores");
+  var newScore = {
+    name: inti,
+    score: newSc
+  }
+
+  var decoded = JSON.parse(savedScores);
+  decoded.push(newScore);
+
+  decoded.sort( (a,b) => {
+    if (a.score > b.score) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
+
+  localStorage.setItem("dojoScores", JSON.stringify(decoded));
+}
+
 function updateScores() {
   // update previous high scores, only post the top three
   var savedScores = localStorage.getItem("dojoScores");
   
-  if (savedScores) {
-    var decoded = JSON.parse(savedScores);
-console.log(decoded);
-    decoded.sort( (a,b) => {
-      if (a.score > b.score) {
-        return -1;
-      } else {
-        return 1;
-      }
-    });
-    console.log(decoded);
-    for (var i =0; i < 3; i++ ){
-      if (i< decoded.length){
-        if (decoded[i])
-    
-          highScores[i].textContent = decoded[i].name + " " + decoded[i].score + " - " + ninjaLevel(decoded[i].score);
-      } else {
-        highScores[i].textContent = "No score";
-      }
+  
+  var decoded = JSON.parse(savedScores);
+
+  decoded.sort( (a,b) => {
+    if (a.score > b.score) {
+      return -1;
+    } else {
+      return 1;
     }
+  });
+
+  for (var i =0; i < 3; i++ ){
+  
+    if (i< decoded.length){
+      if (decoded[i])
+  
+        highScores[i].textContent = decoded[i].name + " " + decoded[i].score + " - " + ninjaLevel(decoded[i].score);
+    } else {
+      highScores[i].textContent = "No score";
+    }
+  
    
 
   }
+
 }
 
 // returns ninga name levels by value
@@ -107,6 +148,18 @@ function ninjaLevel(value) {
       return "Try needle point"
   }
 
+}
+
+function clock() {
+  
+  // Update clock
+  timeLeft--;
+  timeEl.innerHTML = timeLeft;
+
+  // Are we out of time
+  if (timeLeft <= 0) {
+    gameOver();
+  }
 }
 
 
