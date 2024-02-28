@@ -1,4 +1,9 @@
 //------------------------------------------------------------------
+// logic.js from https://github.com/Kevins-Trove
+// By: Kevin Roper
+//------------------------------------------------------------------
+
+//------------------------------------------------------------------
 // variables to keep track of quiz state
 //------------------------------------------------------------------
 var questionIndex = 0;
@@ -192,9 +197,10 @@ function addScore(inti, newSc) {
   localStorage.setItem("dojoScores", JSON.stringify(decoded));
 }
 
+// update score list, only post the top three
 function updateScores() {
   
-  // update previous high scores, only post the top three
+  // update previous high scores
   var decoded = JSON.parse(localStorage.getItem("dojoScores"));
   
   // Sort the array if it is not null
@@ -249,6 +255,7 @@ function ninjaLevel(value) {
 
 }
 
+// Update clock interface
 function clock() {
   
   // Update clock

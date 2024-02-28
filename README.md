@@ -7,7 +7,7 @@ JavascriptNinjaDojo a project to test a javascript programmer's skill in a timed
 ## Check out my work, feel free to adapt it to your needs
 [Visit the Ninja Javascript quiz site](https://kevins-trove.github.io/JavaNinjaDojo/)
 
-[See the Javscript Ninja Quiz repository](https://github.com/Kevins-Trove/JavaNinjaDojoo)
+[See the Javscript Ninja Quiz repository](https://github.com/Kevins-Trove/JavaNinjaDojo)
 
 
 - - -
