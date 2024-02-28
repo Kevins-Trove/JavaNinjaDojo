@@ -79,21 +79,38 @@ submit.addEventListener('click', (event) => {
 //------------------------------------------------------------------
 function newQuestion(){
   //var title = document.querySelector('#question-title');
-  var list = document.querySelector("#choiceList");
+  var list = document.querySelector(".choiceList");
   var choices = document.querySelectorAll('.choices');
-  var question = questions[curQuestion++]; // increment question index  while getting reference
+  var question = questions[++curQuestion]; // increment question index  while getting reference
+  var item;
+
   
   // Set question title and anwsers
-  document.querySelector('#question-title').textContent = questions[0].title;
-  document.querySelector('#question-answer').textContent = questions[0].answer;
+  document.querySelector('#question-title').textContent = question.title;
+  document.querySelector('#question-answer').textContent = question.answer;
 
-  list.parentNode.removeChild(list);
+  list.parentElement.remove(list);
+  list = document.querySelector(".choiceList");
   
-  for (var i = 0; i < choices.length; i++){
-  
+console.log();
+  //list.parentNode.removeChild(list);
+  list = document.createElement("ul");
+  list.classList.add('choices');
+
+  console.log(list);
+  for (var i = 0; i < question.choices.length; i++){
+    item = document.createElement("LI");
+    item.classList.add('choices');
+    item.textContent =  question.choices[i];
+    item.addEventListener("click", function() {
+      alert(this.name);
+
+    });
+    console.log(item);
+    list.appendChild(item);
   }
   
-  
+  console.log(list);
   
   
 }
