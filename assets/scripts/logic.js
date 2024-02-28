@@ -6,6 +6,7 @@ var timeLimit = 15;
 var timeLeft;
 var timerId;
 var userScore = 0;
+var curQuestion = -1;
 var itemObj = {
   name: "",
   score: 0
@@ -77,12 +78,21 @@ submit.addEventListener('click', (event) => {
 // Functions
 //------------------------------------------------------------------
 function newQuestion(){
-  var title = document.querySelector('#question-title');
-  var choices = document.querySelector('#choices');
+  //var title = document.querySelector('#question-title');
+  var list = document.querySelector("#choiceList");
+  var choices = document.querySelectorAll('.choices');
+  var question = questions[curQuestion++]; // increment question index  while getting reference
   
-  title.textContent = questions[0].title;
-  console.log(choices);
-  choices.removeChild(choices);
+  // Set question title and anwsers
+  document.querySelector('#question-title').textContent = questions[0].title;
+  document.querySelector('#question-answer').textContent = questions[0].answer;
+
+  list.parentNode.removeChild(list);
+  
+  for (var i = 0; i < choices.length; i++){
+  
+  }
+  
   
   
   
@@ -198,105 +208,3 @@ function clock() {
     gameOver();
   }
 }
-
-
-
-/*
-// sound effects
-var sfxRight = new Audio('assets/sfx/correct.wav');
-var sfxWrong = new Audio('assets/sfx/incorrect.wav');
-
-function startQuiz() {
-  // hide start screen
-  var startScreenEl = document.getElementById('start-screen');
-  startScreenEl.setAttribute('class', 'hide');
-
-  // un-hide questions section
-  questionsEl.removeAttribute('class');
-
-  // start timer
-  timerId = setInterval(clockTick, 1000);
-
-  // show starting time
-  timerEl.textContent = time;
-
-  getQuestion();
-}
-
-
-function getQuestion() {
-  // get current question object from array
-  var currentQuestion = questions[currentQuestionIndex];
-
-  // update title with current question
-  var titleEl = document.getElementById('question-title');
-  titleEl.textContent = currentQuestion.title;
-
-  // clear out any old question choices
-  choicesEl.innerHTML = '';
-
-  // loop over choices
-  for (var i = 0; i < currentQuestion.choices.length; i++) {
-    // create new button for each choice
-    var choice = currentQuestion.choices[i];
-    var choiceNode = document.createElement('button');
-    choiceNode.setAttribute('class', 'choice');
-    choiceNode.setAttribute('value', choice);
-
-    choiceNode.textContent = i + 1 + '. ' + choice;
-
-    // display on the page
-    choicesEl.appendChild(choiceNode);
-  }
-}
-
-function questionClick(event) {
-  var buttonEl = event.target;
-
-  // if the clicked element is not a choice button, do nothing.
-  if (!buttonEl.matches('.choice')) {
-    return;
-  }
-
-  // check if user guessed wrong
-  if (buttonEl.value !== questions[currentQuestionIndex].answer) {
-    // penalize time
-    time -= 15;
-
-    if (time < 0) {
-      time = 0;
-    }
-
-    // display new time on page
-    timerEl.textContent = time;
-
-    // play "wrong" sound effect
-    sfxWrong.play();
-
-    feedbackEl.textContent = 'Wrong!';
-  } else {
-    // play "right" sound effect
-    sfxRight.play();
-
-    feedbackEl.textContent = 'Correct!';
-  }
-
-  // flash right/wrong feedback on page for half a second
-  feedbackEl.setAttribute('class', 'feedback');
-  setTimeout(function () {
-    feedbackEl.setAttribute('class', 'feedback hide');
-  }, 1000);
-
-  // move to next question
-  currentQuestionIndex++;
-
-  // check if we've run out of questions
-  if (time <= 0 || currentQuestionIndex === questions.length) {
-    quizEnd();
-  } else {
-    getQuestion();
-  }
-}
-
-
-
