@@ -1,6 +1,6 @@
 # JavascriptNinjaDojo: Quiz center
 
-JavascriptNinjaDojo a project to test a javascript programmer's skill in a timed test. 
+JavascriptNinjaDojo a sample javascript project to test a javascript programmer's skill in a timed test. 
 
 ![Screenshot of Javascript Ninja Dojo quiz center](/assets/images/screenshot-app.png?raw=true "JavascriptNinjaDojo")
 
